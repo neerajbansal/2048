@@ -1,5 +1,13 @@
-const chalk = require('chalk')
+/**
+ * Author: Neeraj Bansal
+ * Email: bansal.neeraj94@gmail.com
+ * Desc: This module manages handles all ouput related tasks of the game
+ */
 
+const chalk = require('chalk')
+const center = require('center-align');
+
+//Initilaize Welcome Screen
 function initializeOutput() {
     console.log(chalk.blue("Welcome to 2048 Console Game!"));
     console.log(chalk.blue("DEVELOPER: NEERAJ BANSAL"));
@@ -13,11 +21,12 @@ function initializeOutput() {
     console.log(chalk.blue("*************GAME************"));
 }
 
+//This function called after every move to refresh diplay and render with new provide state "grid & score"
 function displayGrid(grid, score) {
-    // console.clear()
     for (var row in grid) {
         for (var column in grid[row]) {
-            process.stdout.write(grid[row][column] + "     ")
+            var value = String(grid[row][column]);
+            process.stdout.write(center(value, 10))
         }
         process.stdout.write('\n');
     }

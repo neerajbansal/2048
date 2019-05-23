@@ -1,7 +1,14 @@
-var gridManager = require('./gridManager');
-var output = require('./output');
+/**
+ * Author: Neeraj Bansal
+ * Email: bansal.neeraj94@gmail.com
+ * Desc: This is the starting point of the game with all keys (movement) logic.
+ */
+
+const gridManager = require('./gridManager');
+const output = require('./displayManager');
 const readline = require('readline');
 const chalk = require('chalk');
+
 readline.emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);
 
@@ -65,7 +72,7 @@ function main() {
                 console.log(chalk.green("Press N to start again"))
             } else {
                 var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
-                grid[r1][c1] = gridManager.getRandom2or4();
+                grid[r1][c1] = gridManager.getRandomNumToFill();
                 output.displayGrid(grid, score);
             }
         } else if (key.name.toLowerCase() === 'left') {
@@ -110,7 +117,7 @@ function main() {
                 console.log(chalk.green("Press N to start again"))
             } else {
                 var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
-                grid[r1][c1] = gridManager.getRandom2or4();
+                grid[r1][c1] = gridManager.getRandomNumToFill();
                 output.displayGrid(grid, score);
             }
         } else if (key.name.toLowerCase() === 'right') {
@@ -155,7 +162,7 @@ function main() {
                 console.log(chalk.green("Press N to start again"))
             } else {
                 var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
-                grid[r1][c1] = gridManager.getRandom2or4();
+                grid[r1][c1] = gridManager.getRandomNumToFill();
                 output.displayGrid(grid, score);
             }
         } else if (key.name.toLowerCase() === 'down') {
@@ -200,7 +207,7 @@ function main() {
                 console.log(chalk.green("Press N to start again"))
             } else {
                 var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
-                grid[r1][c1] = gridManager.getRandom2or4();
+                grid[r1][c1] = gridManager.getRandomNumToFill();
                 output.displayGrid(grid, score);
             }
         }

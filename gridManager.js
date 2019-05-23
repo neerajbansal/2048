@@ -1,5 +1,13 @@
+/**
+ * Author: Neeraj Bansal
+ * Email: bansal.neeraj94@gmail.com
+ * Desc: This module manages state of grid and provide util functions for grid management
+ */
+
+//Default grid size is 4 which can be extensive to any degree (max 10 here to make it playble)
 function makeEmptyGrid(size = 4) {
     if (size <= 2) {
+        //Not intuitive to play less than this board
         console.log("Size must be greater than 2 !")
         return
     } else if (size > 10) {
@@ -23,12 +31,14 @@ function getRandomEmptyPositionFromGrid(grid) {
     return randomEmptyPositions;
 }
 
-function getRandom2or4() {
-    var twoFour = [2, 4]
-    var random2or4 = twoFour[Math.round((Math.random() * 1000)) % twoFour.length];
-    return random2or4;
+//Randomly get 2 or 4 to fill in grid at random place after every move.
+function getRandomNumToFill() {
+    var randomNumArr = [2, 4] //We can add any number here like 8 or 16
+    var randomNum = randomNumArr[Math.round((Math.random() * 1000)) % randomNumArr.length];
+    return randomNum;
 }
 
+//Exit condition on number or tiles not available
 function checkExitCondition(grid, score) {
     if (score >= 2048) {
         return [true, "Yippee! you reached best score"]
@@ -40,10 +50,10 @@ function checkExitCondition(grid, score) {
             }
         }
     }
-    return [true, "No More tiles left"];
+    return [true, "No more tiles left"];
 }
 
 exports.makeEmptyGrid = makeEmptyGrid
 exports.getRandomEmptyPositionFromGrid = getRandomEmptyPositionFromGrid
-exports.getRandom2or4 = getRandom2or4
+exports.getRandomNumToFill = getRandomNumToFill
 exports.checkExitCondition = checkExitCondition
