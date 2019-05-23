@@ -5,9 +5,8 @@
  */
 
 const gridManager = require('./gridManager');
-const output = require('./displayManager');
+const displayManager = require('./displayManager');
 const readline = require('readline');
-const chalk = require('chalk');
 
 function main() {
     //Bind process with input read
@@ -15,7 +14,7 @@ function main() {
     process.stdin.setRawMode(true);
 
     //Welcome screen
-    output.welcomeAndControlsScreen();
+    displayManager.welcomeAndControlsScreen();
 
     var gridSize = 4; //Just change this number to make grid of any size (min-2 & max- 10 so that game is playable on normal system)
     var grid = null;
@@ -24,8 +23,9 @@ function main() {
     process.stdin.on('keypress', (str, key) => {
         if (key.name.toLowerCase() === 'q') {
             process.exit();
+
         } else if (key.name.toLowerCase() === 'n' || key.name.toLowerCase() === 'p') {
-            output.welcomeAndControlsScreen();
+            displayManager.welcomeAndControlsScreen();
 
             //Below code fill any two empty random places with random number to start a game.
             [grid, score] = gridManager.makeEmptyGrid(gridSize);
@@ -34,179 +34,131 @@ function main() {
             var [r2, c2] = gridManager.getRandomEmptyPositionFromGrid(grid)
             grid[r2][c2] = gridManager.getRandomNumToFill();
 
-            output.displayGrid(grid, score);
+            displayManager.displayGrid(grid, score);
 
 
         } else if (key.name.toLowerCase() === 'up') {
-            output.welcomeAndControlsScreen();
+            displayManager.welcomeAndControlsScreen();
 
             for (var row in grid) {
-                var columnArr = []
+                var columnArr = [];
                 for (var column in grid[row]) {
                     if (grid[column][row] != '_') {
-                        columnArr.push(grid[column][row])
+                        columnArr.push(grid[column][row]);
                     }
                 }
                 if (columnArr.length >= 2) {
                     for (var i = columnArr.length; i > 0; i--) {
                         if (columnArr[i - 1] == columnArr[i - 2]) {
-                            columnArr[i - 2] = columnArr[i - 2] + columnArr[i - 1]
-                            score += columnArr[i - 2]
-                            columnArr.pop()
+                            columnArr[i - 2] = columnArr[i - 2] + columnArr[i - 1];
+                            score += columnArr[i - 2];
+                            columnArr.pop();
                             i--;
                         }
                     }
                 }
 
                 for (var i = columnArr.length; i < grid.length; i++) {
-                    columnArr.push('_')
+                    columnArr.push('_');
                 }
                 for (var column in grid[row]) {
-                    grid[column][row] = columnArr[column]
+                    grid[column][row] = columnArr[column];
                 }
             }
 
-            var [isExit, msg] = gridManager.checkExitCondition(grid, score);
-            if (isExit) {
-                console.log(chalk.green(msg))
-                console.log(chalk.green("Press N to start again"))
-            } else {
-                var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
-                grid[r1][c1] = gridManager.getRandomNumToFill();
-                output.displayGrid(grid, score);
-            }
+            gridManager.exitOrNextStep(grid, score);
+
         } else if (key.name.toLowerCase() === 'left') {
-            output.welcomeAndControlsScreen();
+            displayManager.welcomeAndControlsScreen();
 
             for (var row in grid) {
-                var columnArr = []
+                var columnArr = [];
                 for (var column in grid[row]) {
                     if (grid[row][column] != '_') {
-                        columnArr.push(grid[row][column])
+                        columnArr.push(grid[row][column]);
                     }
                 }
-                console.log(columnArr)
                 if (columnArr.length >= 2) {
-                    console.log('ccccccccccccccc')
                     for (var i = columnArr.length; i > 0; i--) {
                         if (columnArr[i - 1] == columnArr[i - 2]) {
-                            console.log('ddddddddddddd')
-                            columnArr[i - 2] = columnArr[i - 2] + columnArr[i - 1]
-                            score += columnArr[i - 2]
-                            columnArr.pop()
+                            columnArr[i - 2] = columnArr[i - 2] + columnArr[i - 1];
+                            score += columnArr[i - 2];
+                            columnArr.pop();
                             i--;
                         }
                     }
                 }
 
                 for (var i = columnArr.length; i < grid.length; i++) {
-                    columnArr.push('_')
+                    columnArr.push('_');
                 }
                 for (var column in grid[row]) {
-                    grid[row][column] = columnArr[column]
+                    grid[row][column] = columnArr[column];
                 }
-                console.log(columnArr)
-                console.log('aaaaaaaaaaaaaaaaa')
             }
 
+            gridManager.exitOrNextStep(grid, score);
 
-            var [isExit, msg] = gridManager.checkExitCondition(grid, score);
-            if (isExit) {
-                console.log(chalk.green(msg))
-                console.log(chalk.green("Press N to start again"))
-            } else {
-                var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
-                grid[r1][c1] = gridManager.getRandomNumToFill();
-                output.displayGrid(grid, score);
-            }
         } else if (key.name.toLowerCase() === 'right') {
-            output.welcomeAndControlsScreen();
+            displayManager.welcomeAndControlsScreen();
 
             for (var row in grid) {
-                var columnArr = []
+                var columnArr = [];
                 for (var column in grid[row]) {
                     if (grid[row][column] != '_') {
-                        columnArr.push(grid[row][column])
+                        columnArr.push(grid[row][column]);
                     }
                 }
-                console.log(columnArr)
                 if (columnArr.length >= 2) {
-                    console.log('ccccccccccccccc')
                     for (var i = 0; i < columnArr.length; i++) {
                         if (columnArr[i] == columnArr[i + 1]) {
-                            console.log('ddddddddddddd')
-                            columnArr[i + 1] = columnArr[i] + columnArr[i + 1]
-                            score += columnArr[i + 1]
-                            columnArr.shift()
+                            columnArr[i + 1] = columnArr[i] + columnArr[i + 1];
+                            score += columnArr[i + 1];
+                            columnArr.shift();
                             i++;
                         }
                     }
                 }
 
                 for (var i = columnArr.length; i < grid.length; i++) {
-                    columnArr.unshift('_')
+                    columnArr.unshift('_');
                 }
                 for (var column in grid[row]) {
-                    grid[row][column] = columnArr[column]
+                    grid[row][column] = columnArr[column];
                 }
-                console.log(columnArr)
-                console.log('aaaaaaaaaaaaaaaaa')
             }
 
-
-            var [isExit, msg] = gridManager.checkExitCondition(grid, score);
-            if (isExit) {
-                console.log(chalk.green(msg))
-                console.log(chalk.green("Press N to start again"))
-            } else {
-                var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
-                grid[r1][c1] = gridManager.getRandomNumToFill();
-                output.displayGrid(grid, score);
-            }
+            gridManager.exitOrNextStep(grid, score);
         } else if (key.name.toLowerCase() === 'down') {
-            output.welcomeAndControlsScreen();
+            displayManager.welcomeAndControlsScreen();
 
             for (var row in grid) {
-                var columnArr = []
+                var columnArr = [];
                 for (var column in grid[row]) {
                     if (grid[column][row] != '_') {
-                        columnArr.push(grid[column][row])
+                        columnArr.push(grid[column][row]);
                     }
                 }
-                console.log(columnArr)
                 if (columnArr.length >= 2) {
-                    console.log('ccccccccccccccc')
                     for (var i = 0; i < columnArr.length; i++) {
                         if (columnArr[i] == columnArr[i + 1]) {
-                            console.log('ddddddddddddd')
-                            columnArr[i + 1] = columnArr[i] + columnArr[i + 1]
-                            score += columnArr[i + 1]
-                            columnArr.shift()
+                            columnArr[i + 1] = columnArr[i] + columnArr[i + 1];
+                            score += columnArr[i + 1];
+                            columnArr.shift();
                             i++;
                         }
                     }
                 }
 
                 for (var i = columnArr.length; i < grid.length; i++) {
-                    columnArr.unshift('_')
+                    columnArr.unshift('_');
                 }
                 for (var column in grid[row]) {
-                    grid[column][row] = columnArr[column]
+                    grid[column][row] = columnArr[column];
                 }
-                console.log(columnArr)
-                console.log('aaaaaaaaaaaaaaaaa')
             }
 
-
-            var [isExit, msg] = gridManager.checkExitCondition(grid, score);
-            if (isExit) {
-                console.log(chalk.green(msg))
-                console.log(chalk.green("Press N to start again"))
-            } else {
-                var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
-                grid[r1][c1] = gridManager.getRandomNumToFill();
-                output.displayGrid(grid, score);
-            }
+            gridManager.exitOrNextStep(grid, score);
         }
     });
 }

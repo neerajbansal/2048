@@ -4,7 +4,7 @@
  * Desc: This module manages handles all ouput related tasks of the game
  */
 
-const chalk = require('chalk')
+const chalk = require('chalk');
 const center = require('center-align');
 
 //Initilaize Welcome Screen
@@ -35,6 +35,7 @@ function displayGrid(grid, score) {
     console.log();
     console.log(chalk.yellow("SCORE:", score));
 }
+
 
 exports.welcomeAndControlsScreen = welcomeAndControlsScreen;
 exports.displayGrid = displayGrid;
