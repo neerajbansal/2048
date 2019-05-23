@@ -71,22 +71,12 @@ function main() {
         } else if (key.name.toLowerCase() === 'left') {
             console.clear();
             output.initializeOutput();
-            [grid, score] = gridManager.makeEmptyGrid();
-            output.displayGrid(grid, score);
-        } else if (key.name.toLowerCase() === 'right') {
-            console.clear();
-            output.initializeOutput();
-            [grid, score] = gridManager.makeEmptyGrid();
-            output.displayGrid(grid, score);
-        } else if (key.name.toLowerCase() === 'down') {
-            console.clear();
-            output.initializeOutput();
 
             for (var row in grid) {
                 var columnArr = []
                 for (var column in grid[row]) {
-                    if (grid[column][row] != '_') {
-                        columnArr.push(grid[column][row])
+                    if (grid[row][column] != '_') {
+                        columnArr.push(grid[row][column])
                     }
                 }
                 console.log(columnArr)
@@ -105,6 +95,96 @@ function main() {
 
                 for (var i = columnArr.length; i < grid.length; i++) {
                     columnArr.push('_')
+                }
+                for (var column in grid[row]) {
+                    grid[row][column] = columnArr[column]
+                }
+                console.log(columnArr)
+                console.log('aaaaaaaaaaaaaaaaa')
+            }
+
+
+            var [isExit, msg] = gridManager.checkExitCondition(grid, score);
+            if (isExit) {
+                console.log(chalk.green(msg))
+                console.log(chalk.green("Press N to start again"))
+            } else {
+                var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
+                grid[r1][c1] = gridManager.getRandom2or4();
+                output.displayGrid(grid, score);
+            }
+        } else if (key.name.toLowerCase() === 'right') {
+            console.clear();
+            output.initializeOutput();
+
+            for (var row in grid) {
+                var columnArr = []
+                for (var column in grid[row]) {
+                    if (grid[row][column] != '_') {
+                        columnArr.push(grid[row][column])
+                    }
+                }
+                console.log(columnArr)
+                if (columnArr.length >= 2) {
+                    console.log('ccccccccccccccc')
+                    for (var i = 0; i < columnArr.length; i++) {
+                        if (columnArr[i] == columnArr[i + 1]) {
+                            console.log('ddddddddddddd')
+                            columnArr[i + 1] = columnArr[i] + columnArr[i + 1]
+                            score += columnArr[i + 1]
+                            columnArr.shift()
+                            i++;
+                        }
+                    }
+                }
+
+                for (var i = columnArr.length; i < grid.length; i++) {
+                    columnArr.unshift('_')
+                }
+                for (var column in grid[row]) {
+                    grid[row][column] = columnArr[column]
+                }
+                console.log(columnArr)
+                console.log('aaaaaaaaaaaaaaaaa')
+            }
+
+
+            var [isExit, msg] = gridManager.checkExitCondition(grid, score);
+            if (isExit) {
+                console.log(chalk.green(msg))
+                console.log(chalk.green("Press N to start again"))
+            } else {
+                var [r1, c1] = gridManager.getRandomEmptyPositionFromGrid(grid)
+                grid[r1][c1] = gridManager.getRandom2or4();
+                output.displayGrid(grid, score);
+            }
+        } else if (key.name.toLowerCase() === 'down') {
+            console.clear();
+            output.initializeOutput();
+
+            for (var row in grid) {
+                var columnArr = []
+                for (var column in grid[row]) {
+                    if (grid[column][row] != '_') {
+                        columnArr.push(grid[column][row])
+                    }
+                }
+                console.log(columnArr)
+                if (columnArr.length >= 2) {
+                    console.log('ccccccccccccccc')
+                    for (var i = 0; i < columnArr.length; i++) {
+                        if (columnArr[i] == columnArr[i + 1]) {
+                            console.log('ddddddddddddd')
+                            columnArr[i + 1] = columnArr[i] + columnArr[i + 1]
+                            score += columnArr[i + 1]
+                            columnArr.shift()
+                            i++;
+                        }
+                    }
+                }
+
+                for (var i = columnArr.length; i < grid.length; i++) {
+                    columnArr.unshift('_')
                 }
                 for (var column in grid[row]) {
                     grid[column][row] = columnArr[column]
