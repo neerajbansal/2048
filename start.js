@@ -37,9 +37,10 @@ function main() {
             displayManager.displayGrid(grid, score);
 
 
-        } else if (key.name.toLowerCase() === 'up') {
+        } else if (key.name.toLowerCase() === 'up') { //Logic for up button
             displayManager.welcomeAndControlsScreen();
 
+            //Below code describes up button logic that how numbers should be merged
             for (var row in grid) {
                 var columnArr = [];
                 for (var column in grid[row]) {
