@@ -1,9 +1,8 @@
 # 2048
 2048 Console Game
 
-## Install and Run
+## Install and Run (Tested with Node version: v10.15.3)
 ```
-- Make sure you have Node version => v10.15.3
 - Run command: npm install
 - Run command: node start.py
 ```
